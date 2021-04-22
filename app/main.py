@@ -1,3 +1,4 @@
+import os
 import flask
 from flask import Flask, request, render_template
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -27,22 +28,23 @@ sched.start()
 """
 Flask App
 """
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 blockchain = Blockchain()
+
 
 
 @app.route("/")
 def home():
-    return render_template("templates/index.html")
+    return render_template("index.html")
 
 
 @app.route("/send")
 def send():
-    return render_template("templates/send.html")
+    return render_template("send.html")
 
 @app.route("/receive")
 def receive():
-    return render_template("templates/receive.html")
+    return render_template("receive.html")
 
 @app.route('/transaction', methods=['GET', 'POST'])
 def get_divinfo():
@@ -52,4 +54,4 @@ def get_divinfo():
     return flask.jsonify({"result":f'ok'})
 
 
-app.run(debug=True, port=5004)
+# app.run(debug=True, port=5004)
