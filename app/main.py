@@ -28,7 +28,7 @@ sched.start()
 """
 Flask App
 """
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__, template_folder='templates', static_folder='templates/static')
 blockchain = Blockchain()
 
 
