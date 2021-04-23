@@ -53,5 +53,12 @@ def get_divinfo():
     blockchain.add_new_transaction(new_transaction)
     return flask.jsonify({"result":f'ok'})
 
+@app.route('/new_wallet', methods=['GET', 'POST'])
+def new_wallet_name():
+    form_submission = request.form.to_dict()
+    print(form_submission)
+    # blockchain.add_new_transaction(new_transaction)
+    return flask.jsonify({"result":f'ok'})
+
 
 # app.run(debug=True, port=5004)
