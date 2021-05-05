@@ -1,64 +1,69 @@
 import os
+import json
 import flask
-from flask import Flask, request, render_template
-from apscheduler.schedulers.background import BackgroundScheduler
+import time
+import eventlet
+eventlet.monkey_patch()
+
+from flask import Flask, render_template, request
+from flask_socketio import SocketIO, emit, disconnect
+
 
 from app.blockchain import *
+from app.users import *
 
 """
 Run Blockchain w/ scheduler
-- Change epoch every hour
+- Change epoch every minute
 """
 
+blockchain = Blockchain()
 
-def new_epoch():
-    blockchain.mine()
-
-    chain_data = []
-    print(blockchain.chain[-1].__dict__)
-    # for block in blockchain.chain:
-    #     chain_data.append(block.__dict__)
-    # print({"length": len(chain_data), "chain": chain_data[-1]})
-
-
-sched = BackgroundScheduler(daemon=True)
-sched.add_job(new_epoch, 'interval', seconds=60)
-sched.start()
+with open('blockchain.json') as f:
+    ledger = json.load(f)
 
 """
 Flask App
 """
 app = Flask(__name__, template_folder='templates', static_folder='templates/static')
-blockchain = Blockchain()
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app, async_mode='eventlet')
+
+# our gloabal worker
+workerObject = None
+
+class Worker(object):
+    def __init__(self, socketio):
+        self.socketio = socketio
+
+    def do_work(self):
+        while True:
+            index = blockchain.mine()
 
 
+            if index is not False:
+                self.socketio.emit("update", {"msg": f"{index}: {blockchain.chain[index]['hash']}"}, namespace="/work")
+                self.socketio.emit("transaction", {"msg": list(blockchain.chain[index]['transactions'])}, namespace="/work")
 
-@app.route("/")
-def home():
-    return render_template("index.html")
-
-
-@app.route("/send")
-def send():
-    return render_template("send.html")
-
-@app.route("/receive")
-def receive():
-    return render_template("receive.html")
-
-@app.route('/transaction', methods=['GET', 'POST'])
-def get_divinfo():
-    new_transaction = request.form.to_dict()
-    print(new_transaction)
-    blockchain.add_new_transaction(new_transaction)
-    return flask.jsonify({"result":f'ok'})
-
-@app.route('/new_wallet', methods=['GET', 'POST'])
-def new_wallet_name():
-    form_submission = request.form.to_dict()
-    print(form_submission)
-    # blockchain.add_new_transaction(new_transaction)
-    return flask.jsonify({"result":f'ok'})
+                # important to use eventlet's sleep method
+                eventlet.sleep(2)
+            eventlet.sleep(2)
 
 
-# app.run(debug=True, port=5004)
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+@socketio.on('connect', namespace='/work')
+def connect():
+    global worker
+    worker = Worker(socketio)
+    socketio.start_background_task(target=worker.do_work)
+
+@app.route('/new_transaction', methods=['POST', 'GET'])
+def transaction():
+    transaction = request.args.get('msg')
+    blockchain.add_new_transaction(transaction)
+
+    return f"Transaction: {transaction}\n"

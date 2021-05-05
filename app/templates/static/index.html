@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+    <title>LUPKOIN</title>
+    <link rel="shortcut icon" type="image/jpg" href="../static/cropped_logo.png"/>
+</head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    body {
+        font-family: "Lato", sans-serif
+    }
+</style>
+
+<body>
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+    <br>
+    <div class="w3-center">
+        <a href="/">
+            <img class="w3-center" src="../static/cropped_logo.png" alt="lk_logo" height="100" width="100"/>
+        </a></div>
+    <h1 class="w3-wide w3-center">LUPSKAN</h1>
+    <h4 class="w3-wide w3-opacity w3-center">The Lupkoin Blockchain Explorer</h4>
+    <hr>
+</div>
+
+<div class="w3-row">
+
+    <div id="messages">nothing received yet</div>
+</div>
+
+<script>
+    if (!!window.EventSource) {
+        var source = new EventSource('/');
+        source.onmessage = function(e) {
+            var m = $("#messages");
+            if (m.text() == 'nothing received yet')
+                m.html("<div>" + e.data + "</div>");
+            else
+                m.append("<div>" + e.data + "</div>");
+        }
+    }
+
+</script>
+
+</body>
+</html>
