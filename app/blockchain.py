@@ -2,27 +2,6 @@ import time
 import json
 import hashlib as h
 
-# class Block:
-#     def __init__(self, index, transactions, timestamp, prevhash):
-#         self.index = index
-#         self.transactions = transactions
-#         self.timestamp = timestamp
-#         self.prevhash = prevhash
-#         self.nonce = 0
-#
-#
-#
-#     """
-#     Hashes are used to verify a transaction has never occurred
-#     - Eg. a transaction occurs - you has it
-#         - a second transaction occurs, you has and then compare with other hashes to note that this hasnt happened before
-#         - this stores the data forever - and hashes can be looked up quickly
-#     """
-#
-#     def compute_hash(self):
-#         block_string = json.dumps(self.__dict__, sort_keys=True)
-#         return h.sha256(block_string.encode()).hexdigest()
-
 
 """
 To ensure immutability: include a hash of the previous block within the current block
