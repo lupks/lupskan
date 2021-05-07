@@ -30,7 +30,6 @@ socketio = SocketIO(app, async_mode='eventlet')
 
 # our gloabal worker
 workerObject = None
-
 class Worker(object):
     def __init__(self, socketio):
         self.socketio = socketio
@@ -38,7 +37,6 @@ class Worker(object):
     def do_work(self):
         while True:
             index = blockchain.mine()
-
 
             if index is not False:
                 self.socketio.emit("update", {"msg": f"{index}: {blockchain.chain[index]['hash']}"}, namespace="/work")
