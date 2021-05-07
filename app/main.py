@@ -28,7 +28,7 @@ app = Flask(__name__, template_folder='templates', static_folder='templates/stat
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode='eventlet')
 
-# our gloabal worker
+# our global worker
 workerObject = None
 class Worker(object):
     def __init__(self, socketio):
