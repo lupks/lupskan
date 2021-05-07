@@ -2,11 +2,12 @@ import os
 import json
 import flask
 import time
-import eventlet
-eventlet.monkey_patch()
 
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit, disconnect
+
+import eventlet
+eventlet.monkey_patch()
 
 from app.blockchain import *
 
