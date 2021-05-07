@@ -1,1 +1,2 @@
-gunicorn app:app --worker-class eventlet -w 1 --bind 0.0.0.0:5000 --reload
+web:gunicorn --worker-class eventlet -w 1 wsgi:app
+
