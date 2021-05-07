@@ -1,27 +1,18 @@
 {
   "0": {
     "transactions": [],
-    "timestamp": 1620413476.179127,
+    "timestamp": 1620414157.269824,
     "prevhash": "0",
     "nonce": 0,
-    "hash": "6d479b588918376a66aaf51a3bd79b81baf3f1b14267f34567daf46182577461"
+    "hash": "71def7ea2f9a9302b1cacd7fa05dcb0ee0e8dee27e179211a94961bf1d837bc6"
   },
   "1": {
     "transactions": [
-      "send"
-    ],
-    "timestamp": 1620413599.1525052,
-    "prevhash": "6d479b588918376a66aaf51a3bd79b81baf3f1b14267f34567daf46182577461",
-    "nonce": 139,
-    "hash": "00f53c6628d3c4027647eb80d06b07ecddd20848ab19c7162c60a359c2e21e94"
-  },
-  "2": {
-    "transactions": [
       "send 100"
     ],
-    "timestamp": 1620413619.1659908,
-    "prevhash": "00f53c6628d3c4027647eb80d06b07ecddd20848ab19c7162c60a359c2e21e94",
-    "nonce": 470,
-    "hash": "007c9706b4d02641d4f92e6ea68bd89003093e831f423c4a17ea08da5d9f19f3"
+    "timestamp": 1620414168.677603,
+    "prevhash": "71def7ea2f9a9302b1cacd7fa05dcb0ee0e8dee27e179211a94961bf1d837bc6",
+    "nonce": 141,
+    "hash": "000530f9885016b9483b4ff74b1a199108a8c8127be422438880a57e05100758"
   }
 }
