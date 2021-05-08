@@ -25,7 +25,6 @@ with open('blockchain.json') as f:
 Flask App
 """
 app = Flask(__name__, template_folder='templates', static_folder='templates/static')
-app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode='eventlet')
 
 # our global worker
