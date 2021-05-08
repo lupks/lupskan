@@ -43,8 +43,8 @@ class Worker(object):
                 self.socketio.emit("transaction", {"msg": list(blockchain.chain[index]['transactions'])}, namespace="/work")
 
                 # important to use eventlet's sleep method
-                eventlet.sleep(2)
-            eventlet.sleep(2)
+                eventlet.sleep(10)
+            eventlet.sleep(10)
 
 
 @app.route('/')

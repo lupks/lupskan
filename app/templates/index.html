@@ -26,6 +26,10 @@
         font-size: small;
     }
 
+    .sender {
+        color: blue;
+    }
+
 </style>
 <body>
 
@@ -84,6 +88,8 @@
                 li.appendChild(document.createTextNode(item));
                 document.getElementById("transactions").prepend(li);
             });
+
+
         });
     });
 </script>
